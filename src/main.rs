@@ -19,7 +19,7 @@ use repository::mongodb::MongoRepo;
 
 #[get("/")]
 fn test_rocket() -> &'static str {
-    return "Rocket Service Requested Succesfully. Califications module online!"
+    return "Rocket Service Requested Succesfully. Califications CUD module online!"
 }
 
 #[launch]

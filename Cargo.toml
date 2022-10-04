@@ -1,5 +1,5 @@
 [package]
-name = "califications"
+name = "califications_CUD"
 version = "0.1.0"
 edition = "2021"
 

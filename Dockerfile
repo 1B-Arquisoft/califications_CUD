@@ -2,7 +2,7 @@ FROM rustlang/rust:nightly-slim
 
 # FROM rust
 
-WORKDIR /usr/src/califications
+WORKDIR /usr/src/califications_CUD
 
 COPY . .
 
@@ -22,6 +22,6 @@ RUN cargo build -r
 
 
 
-CMD ["./target/debug/./califications"]
+CMD ["./target/debug/./califications_CUD"]
 
 # CMD ["cargo", "run"]
