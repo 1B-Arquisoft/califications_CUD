@@ -1,16 +1,7 @@
-use std::env;
 extern crate dotenv;
 use dotenv::dotenv;
-// use futures::io::Cursor;
-// use mongodb::options;
-// use mongodb::options::FindOneOptions;
-// use mongodb::options::FindOptions;
-// use rocket::serde::json::Json;
-
+use std::env;
 use crate::models::courses::Course;
-// use crate::models::courses::CourseJSON;
-// use crate::models::courses::GradeOfStudentInCourse;
-// use crate::rocket{serde::json::Json};
 
 use mongodb::{
     bson::{doc, extjson::de::Error}, //, Document}, //modify hereo id::ObjectId
