@@ -1,0 +1,13 @@
+0.0.0.0:8000/califications/coursecreation/?courseName="Visual"&teacherName="Charalambos"&teacherId="2"&group="1"&studentsInCourse=[]
+
+let data = Course {
+        id: None,
+        name: new_user.name.to_owned(),
+        location: new_user.location.to_owned(),
+        title: new_user.title.to_owned(),
+    };
+    let user_detail = db.create_user(data);
+    match user_detail {
+        Ok(user) => Ok(Json(user)),
+        Err(_) => Err(Status::InternalServerError),
+    }

@@ -1,0 +1,88 @@
+// Whenever an user is created, I'll get it from the API Gateway, so,
+// I must have to add the course, it's group and the student's into it
+
+courses: {
+    group: "1"
+}
+
+course: {
+    course_id : "1";
+    name: "Calculus";
+    teacher: "Padilla";
+    teacher_id: "1";
+    group: "1";
+    studentsInCourse: {
+        id: "1";
+        grade: "0"
+    }
+}
+
+studentInCourse: {
+    id: "1";
+    grade: "1" // Just the last grade
+}
+
+[
+    {
+      "courseName": 'Calculus',
+      "teacher": 'Padilla',
+      "teacherId": '1',
+      "group": '1',
+      "studentsInCourse": [ {
+         "id": '1', "grade": '0' } ]
+    },
+    {
+      "courseName": 'Calculus',
+      "teacher": 'Padilla',
+      "teacherId": '1',
+      "group": '2',
+      "studentsInCourse": [ { "id": '2', "grade": '0' } ]
+    }
+  ]
+  
+
+
+  filters:{
+    Queries:{
+        db.course.insertOne(
+            {"courseName": 'Calculus', 
+            "teacher": 'Padilla (No Disponible)',
+            "teacherId": '1',
+            "group": '1',
+            "studentsInCourse": [
+                {"id": '1',
+                "grade": '0' 
+                } 
+            ]
+        }
+        ) // insert a course with a single student
+        db.course.insertOne(
+            {"courseName": 'Calculus', 
+            "teacher": 'Padilla', 
+            "teacherId": '1',
+            "group": '7',
+        }
+        ) 
+        db.course.find({
+            "courseName": "Calculus", 
+            "studentsInCourse.id": "1", 
+            "group":"1"
+        }
+        ); // filter by courseName, studentId and group
+        db.course.find({"courseName": "Calculus", "group": "1"}); // filter by courseName and group
+        db.course.find({"courseName": "Calculus"}); // filter by courseName find all groups of the course
+        db.course.find({"studentsInCourse.id": "1"}); // shows up all the courses where the student is in
+        db.course.find({"courseName": "Calculus", "studentsInCourse.id": "1", "group":"3"}, {studentsInCourse: {"$elemMatch": {"id": "1"}}}) // filter by courseName, studentId and group, also shows only the id and grade of the student of the given id
+        db.course.find({"studentsInCourse.id": "1"}, {studentsInCourse: {"$elemMatch": {"id": "1"}}, courseName: 1, _id:0, group:1} ); // shows up all the courses where the student is in, also shows only the id and grade of the student of the given id, and the courseName and group
+
+        db.course.updateOne( {"courseName": "Calculus", "studentsInCourse.id": "1", "group": "3" }, { $set: {"studentsInCourse.$[matchedStudent].grade": "5"}}, {arrayFilters: [{"matchedStudent.id": "1"}] }) // update the grade of the student of the given id in a given course group and course name
+        db.course.updateOne( {"courseName": "Calculus", /*"studentsInCourse.id": "1",*/ "group": "3" }, { $pull: {"studentsInCourse.id": "1"}})//, {arrayFilters: [{"matchedStudent.id": "1"}] }) // delete the student of the given id in a given course group and course name
+        db.course.updateOne( {"courseName": "Calculus", /*"studentsInCourse.id": "1",*/ "group": "9" }, { $pull: {"studentsInCourse": {id:"1"}}})
+        
+        db.course.deleteOne({"courseName": "Calculus", "group": "3"}) // delete a course group
+        db.course.deleteMany({"courseName": "Calculus"}) // delete all the course groups of a course
+        db.course.deleteMany({"studentsInCourse.id": "1"}) // delete all the courses where the student is in
+    }
+  }
+
+//   db.course.updateOne( {"courseName": "Calculus", /*"studentsInCourse.id": "1",*/ "group": "9" }, { $pull: {"studentsInCourse.id": "1"}})
